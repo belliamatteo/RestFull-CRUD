@@ -39,7 +39,7 @@ renderizza = function(pagina,res, dati){
 }
 router.get('/', function (req, res, next) {
   let sqlQuery = "select * from dbo.[cr-unit-attributes]";
-  executeQuery(res, sqlQuery, next);
+  executeQuery(res, sqlQuery, next, "unita");
 });
 
 module.exports = router;
