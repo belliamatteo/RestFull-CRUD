@@ -2,16 +2,18 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
-  p Nome unit: #{arr.Unit}
-  p Cost: #{arr.Cost}
-  p Hit Speed: #{arr.Hit_Speed}
-  p Speed: #{arr.Speed}
-  p Deploy Time: #{arr.Deploy_Time}
-  p Range: #{arr.Range}
-  p Target: #{arr.Target}
-  p Count: #{arr.Count}
-  p Transport: #{arr.Transport}
-  p Type: #{arr.Type}
-  p Rarity: #{arr.Rarity}
-  img(src = `/images/${arr.Unit}.png`)
+  each arr in unita
+    p Welcome to #{arr.Unit}
+    img(src = `/images/${arr.Unit}.png`)
+    p Nome unit: #{arr.Unit}
+    p Cost: #{arr.Cost}
+    p Hit Speed: #{arr.Hit_Speed}
+    p Speed: #{arr.Speed}
+    p Deploy Time: #{arr.Deploy_Time}
+    p Range: #{arr.Range}
+    p Target: #{arr.Target}
+    p Count: #{arr.Count}
+    p Transport: #{arr.Transport}
+    p Type: #{arr.Type}
+    p Rarity: #{arr.Rarity}
+    

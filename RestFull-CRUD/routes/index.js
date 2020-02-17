@@ -25,6 +25,7 @@ let executeQuery = function (res, query, next, pagina) {
         return;
       }
       //res.render('unita', {unit : result.recordset}); //Il vettore con i dati è nel campo recordset (puoi loggare result per verificare)
+      console.log(result.recordset);
       renderizza(pagina, res, result.recordset)
       sql.close();
     });
@@ -40,6 +41,11 @@ renderizza = function(pagina,res, dati){
 router.get('/', function (req, res, next) {
   let sqlQuery = "select * from dbo.[cr-unit-attributes]";
   executeQuery(res, sqlQuery, next, "unita");
+});
+
+router.get('/unit/:name', function(req, res, next){
+    let sqlQuery = `select * from dbo.[cr-unit-attributes] WHERE Unit ='${req.params.name}'`;
+    executeQuery(res, sqlQuery, next, "link");
 });
 
 module.exports = router;
