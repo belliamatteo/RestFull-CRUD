@@ -45,12 +45,29 @@ router.get('/index', function(req,res,next){
 
 router.get('/', function (req, res, next) {
   let sqlQuery = "select * from dbo.[cr-unit-attributes]";
-  executeQuery(res, sqlQuery, next, "unita");
+  executeQuery(res, sqlQuery, next, "unita", true);
 });
 
 router.get('/unit/:name', function(req, res, next){
     let sqlQuery = `select * from dbo.[cr-unit-attributes] WHERE Unit ='${req.params.name}'`;
-    executeQuery(res, sqlQuery, next, "link");
+    executeQuery(res, sqlQuery, next, "link", true);
 });
+
+router.post('/', function (req, res, next) {
+    // Add a new Unit  
+    console.log("ciao");
+    let unit = req.body;
+    if (!unit) {  //Qui dovremmo testare tutti i campi della richiesta
+        res.status(500).json({ success: false, message: 'Error while connecting database', error: err });
+        return;
+    }
+    let sqlInsert = `INSERT INTO dbo.[cr-unit-attributes] (Unit,Cost,Hit_Speed) 
+                     VALUES ('${unit.Unit}','${unit.Cost}','${unit.Hit_Speed}')`;
+    executeQuery(res, sqlInsert, next, "inserimento", false);
+    vett = [];
+    vett.push(unit);
+    res.render("inserimento", { unita: vett })
+});
+
 
 module.exports = router;
