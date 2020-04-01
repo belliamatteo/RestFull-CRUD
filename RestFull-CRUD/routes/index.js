@@ -9,7 +9,7 @@ const config = {
   database: '4DD_05', //(Nome del DB)
 }
 
-let executeQuery = function (res, query, next, pagina) {
+let executeQuery = function (res, query, next, pagina, sendData) {
   sql.connect(config, function (err) {
     if (err) { //Display error page
       console.log("Error while connecting database :- " + err);
@@ -25,8 +25,10 @@ let executeQuery = function (res, query, next, pagina) {
         return;
       }
       //res.render('unita', {unit : result.recordset}); //Il vettore con i dati è nel campo recordset (puoi loggare result per verificare)
-      console.log(result.recordset);
-      renderizza(pagina, res, result.recordset)
+      if (sendData) {
+          console.log("enter");
+          renderizza(pagina, res, result.recordset);
+      }
       sql.close();
     });
 
@@ -63,11 +65,10 @@ router.post('/', function (req, res, next) {
     }
     let sqlInsert = `INSERT INTO dbo.[cr-unit-attributes] (Unit,Cost,Hit_Speed) 
                      VALUES ('${unit.Unit}','${unit.Cost}','${unit.Hit_Speed}')`;
-    executeQuery(res, sqlInsert, next, "inserimento", false);
+    executeQuery(res, sqlInsert, next, "link", false);
     vett = [];
     vett.push(unit);
-    res.render("inserimento", { unita: vett })
+    res.render("link", { unita: vett })
 });
-
 
 module.exports = router;
